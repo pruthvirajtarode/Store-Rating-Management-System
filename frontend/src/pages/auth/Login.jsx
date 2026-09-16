@@ -32,7 +32,11 @@ const Login = () => {
       else if (user.role === 'STORE_OWNER') navigate('/owner/dashboard');
       else navigate('/user/stores');
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Login failed');
+      if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(error.message || 'Login failed due to network or server error');
+      }
     } finally {
       setLoading(false);
     }

@@ -59,8 +59,10 @@ const Signup = () => {
     } catch (error) {
       if (error.response?.data?.errors) {
         toast.error(error.response.data.errors[0].msg);
+      } else if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
       } else {
-        toast.error(error.response?.data?.message || 'Registration failed');
+        toast.error(error.message || 'Registration failed due to network or server error');
       }
     } finally {
       setLoading(false);
