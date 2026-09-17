@@ -85,12 +85,17 @@ const Login = () => {
             </div>
           )}
           
-          <form onSubmit={handleLogin} className="space-y-5">
+          <form onSubmit={handleLogin} className="space-y-5" noValidate>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">Email Address</label>
               <input type="email" required
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:bg-white focus:ring-4 focus:ring-primary/10 focus:border-primary transition-all text-gray-900 shadow-sm"
+                className={`w-full px-4 py-3 bg-gray-50 border rounded-xl outline-none focus:bg-white focus:ring-4 transition-all text-gray-900 shadow-sm ${email.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? 'border-red-300 focus:ring-red-500/20 focus:border-red-500' : 'border-gray-200 focus:ring-primary/10 focus:border-primary'}`}
                 value={email} onChange={(e) => {setEmail(e.target.value); setAuthError('');}} placeholder="name@company.com" />
+              {email.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && (
+                <p className="text-xs text-red-500 mt-1.5 font-medium animate-in fade-in">
+                  Please enter a valid email address
+                </p>
+              )}
             </div>
             
             <div>
@@ -106,7 +111,7 @@ const Login = () => {
               </div>
             </div>
             
-            <button type="submit" disabled={loading}
+            <button type="submit" disabled={loading || (email.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))}
               className="w-full bg-primary text-white py-3.5 rounded-xl font-medium hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed mt-4 flex justify-center items-center">
               {loading ? (
                 <span className="flex items-center gap-2">

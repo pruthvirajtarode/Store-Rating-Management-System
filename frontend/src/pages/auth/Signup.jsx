@@ -142,7 +142,7 @@ const Signup = () => {
                 </div>
               )}
               
-              <form onSubmit={handleSignup} className="space-y-5">
+              <form onSubmit={handleSignup} className="space-y-5" noValidate>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">Full Name</label>
                   <input name="name" type="text" required minLength={20} maxLength={60}
