@@ -50,20 +50,32 @@ const OwnerDashboard = () => {
   return (
     <div className="space-y-8">
       {stores.map((store) => (
-        <div key={store.id} className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-          <div className="p-8 border-b border-gray-100 bg-gray-50/50 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 tracking-tight">{store.name}</h2>
-              <p className="text-gray-500 mt-1">{store.address}</p>
-            </div>
-            <div className="flex gap-4">
-              <div className="bg-white px-6 py-3 rounded-xl border border-gray-100 shadow-sm text-center">
-                <p className="text-xs text-gray-400 font-bold uppercase tracking-wider mb-1">Avg Rating</p>
-                <p className="text-2xl font-black text-gray-900">{store.averageRating === 0 ? 'N/A' : `${store.averageRating} / 5`}</p>
+        <div key={store.id} className="bg-white rounded-2xl border border-gray-100 shadow-xl overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="relative h-64 w-full bg-gray-900 overflow-hidden">
+            {store.imageUrl ? (
+              <img src={store.imageUrl} alt={store.name} className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay" />
+            ) : (
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-900 to-purple-900"></div>
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/60 to-transparent"></div>
+            
+            <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 z-10">
+              <div>
+                <h2 className="text-4xl font-black text-white tracking-tight drop-shadow-md">{store.name}</h2>
+                <p className="text-gray-300 mt-2 font-medium flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-green-400"></span>
+                  {store.address}
+                </p>
               </div>
-              <div className="bg-white px-6 py-3 rounded-xl border border-gray-100 shadow-sm text-center">
-                <p className="text-xs text-gray-400 font-bold uppercase tracking-wider mb-1">Total</p>
-                <p className="text-2xl font-black text-gray-900">{store.totalRatings}</p>
+              <div className="flex gap-4">
+                <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20 shadow-xl text-center">
+                  <p className="text-xs text-indigo-200 font-bold uppercase tracking-wider mb-1">Avg Rating</p>
+                  <p className="text-3xl font-black text-white drop-shadow-sm">{store.averageRating === 0 ? 'N/A' : `${store.averageRating} / 5`}</p>
+                </div>
+                <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/20 shadow-xl text-center">
+                  <p className="text-xs text-indigo-200 font-bold uppercase tracking-wider mb-1">Total</p>
+                  <p className="text-3xl font-black text-white drop-shadow-sm">{store.totalRatings}</p>
+                </div>
               </div>
             </div>
           </div>
