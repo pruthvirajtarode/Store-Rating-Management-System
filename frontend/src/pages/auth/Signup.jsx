@@ -129,15 +129,25 @@ const Signup = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">Full Name</label>
                   <input name="name" type="text" required minLength={20} maxLength={60}
-                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                    className={`w-full px-4 py-2.5 bg-gray-50 border rounded-lg outline-none focus:bg-white focus:ring-2 transition-all ${formData.name.length > 0 && formData.name.length < 20 ? 'border-red-400 focus:ring-red-400/20 focus:border-red-400' : 'border-gray-200 focus:ring-primary/20 focus:border-primary'}`}
                     value={formData.name} onChange={handleChange} placeholder="John Doe (20 chars min)" />
+                  {formData.name.length > 0 && formData.name.length < 20 && (
+                    <p className="text-xs text-red-500 mt-1.5 font-medium">
+                      Minimum 20 characters required (currently {formData.name.length})
+                    </p>
+                  )}
                 </div>
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
                   <input name="email" type="email" required
-                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                    className={`w-full px-4 py-2.5 bg-gray-50 border rounded-lg outline-none focus:bg-white focus:ring-2 transition-all ${formData.email.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) ? 'border-red-400 focus:ring-red-400/20 focus:border-red-400' : 'border-gray-200 focus:ring-primary/20 focus:border-primary'}`}
                     value={formData.email} onChange={handleChange} placeholder="john@example.com" />
+                  {formData.email.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) && (
+                    <p className="text-xs text-red-500 mt-1.5 font-medium">
+                      Please enter a valid email address
+                    </p>
+                  )}
                 </div>
                 
                 <div>
