@@ -3,10 +3,13 @@ import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { LogOut, Home, Users, Store as StoreIcon, Star } from 'lucide-react';
 
+import ChangePasswordModal from '../components/ChangePasswordModal';
+
 const DashboardLayout = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = React.useState(false);
 
   const handleLogout = () => {
     logout();
@@ -60,7 +63,16 @@ const DashboardLayout = () => {
             </Link>
           ))}
         </nav>
-        <div className="p-2 md:p-4 border-t shrink-0 flex items-center">
+        <div className="p-2 md:p-4 border-t shrink-0 flex flex-col gap-1 items-center">
+          <button 
+            onClick={() => setIsPasswordModalOpen(true)}
+            className="flex md:w-full items-center gap-2 md:gap-3 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors whitespace-nowrap"
+          >
+            <span className="flex items-center justify-center w-5 h-5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            </span>
+            <span className="hidden sm:inline md:inline">Change Password</span>
+          </button>
           <button 
             onClick={handleLogout}
             className="flex md:w-full items-center gap-2 md:gap-3 px-3 py-2 rounded-md text-sm font-medium text-red-600 hover:bg-red-50 transition-colors whitespace-nowrap"
@@ -70,6 +82,8 @@ const DashboardLayout = () => {
           </button>
         </div>
       </aside>
+
+      <ChangePasswordModal isOpen={isPasswordModalOpen} onClose={() => setIsPasswordModalOpen(false)} />
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden w-full">

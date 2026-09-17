@@ -25,7 +25,7 @@ const getStores = async (req, res, next) => {
       prisma.store.findMany({
         where,
         include: {
-          ratings: { select: { rating: true, userId: true } }
+          ratings: { select: { id: true, rating: true, userId: true } }
         },
         orderBy: { [sortBy]: sortOrder },
         skip,
@@ -47,7 +47,8 @@ const getStores = async (req, res, next) => {
         address: store.address,
         imageUrl: store.imageUrl,
         averageRating: avg, 
-        userRating: userRating ? userRating.rating : null
+        userRating: userRating ? userRating.rating : null,
+        userRatingId: userRating ? userRating.id : null
       };
     });
 

@@ -37,35 +37,19 @@ const UserStores = () => {
   const submitRating = async (storeId, newRating) => {
     setRatingLoading(true);
     try {
-      // Find if user already rated
       const store = stores.find(s => s.id === storeId);
       
-      if (store.userRating !== null) {
-        // Need to update rating. But wait, updateRating requires rating ID. 
-        // Let's change backend to accept PUT /api/ratings with storeId in body to update?
-        // Ah, our backend expects PUT /api/ratings/:id. 
-        // We might not have the rating ID on the frontend. 
-        // Let's modify the frontend to send POST for both if we modify backend, OR we just use POST and let backend handle upsert, OR we find the rating ID.
-        // Actually, the simplest way is to add an endpoint or fetch ratings to get the ID.
-        // Let's just use a modified fetch or change how rating works. 
-        // Since I need it to work now, I'll assume POST to /api/ratings is for new, but wait, update requires ID.
-        // I will make a quick backend fix in a moment to allow PUT /api/ratings by storeId if ID is missing.
-        // For now, let's just make it a POST to /api/ratings and see if it fails.
-        // Actually, since I can't easily get the rating ID here without another request, 
-        // I will just use POST, and if it's 409, I will need to update it.
+      if (store.userRating !== null && store.userRatingId) {
+        await api.put(`/ratings/${store.userRatingId}`, { rating: newRating });
+        toast.success('Rating updated successfully!');
+      } else {
+        await api.post('/ratings', { storeId, rating: newRating });
+        toast.success('Rating submitted successfully!');
       }
-
-      await api.post('/ratings', { storeId, rating: newRating });
-      toast.success('Rating submitted successfully!');
+      
       fetchStores(); // Refresh to get updated stats
     } catch (error) {
-      if (error.response?.status === 409) {
-        // It means already rated. I need to get the rating id to update.
-        // For this demo, let's just alert.
-        toast.error('Rating update requires rating ID implementation in this frontend view. See code comments.');
-      } else {
-        toast.error(error.response?.data?.message || 'Failed to submit rating');
-      }
+      toast.error(error.response?.data?.message || 'Failed to submit rating');
     } finally {
       setRatingLoading(false);
     }
