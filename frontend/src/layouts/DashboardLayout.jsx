@@ -4,12 +4,14 @@ import { useAuth } from '../context/AuthContext';
 import { LogOut, Home, Users, Store as StoreIcon, Star } from 'lucide-react';
 
 import ChangePasswordModal from '../components/ChangePasswordModal';
+import ProfileModal from '../components/ProfileModal';
 
 const DashboardLayout = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [isPasswordModalOpen, setIsPasswordModalOpen] = React.useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = React.useState(false);
 
   const handleLogout = () => {
     logout();
@@ -91,18 +93,22 @@ const DashboardLayout = () => {
           <h1 className="font-semibold text-lg text-gray-800 capitalize">
             {location.pathname.split('/').pop().replace('-', ' ')}
           </h1>
-          <div className="flex items-center gap-3">
+          <div 
+            onClick={() => setIsProfileModalOpen(true)}
+            className="flex items-center gap-3 cursor-pointer hover:bg-gray-50 py-1.5 px-3 rounded-xl transition-colors -mr-3"
+          >
             <div className="flex flex-col items-end hidden sm:flex">
               <span className="text-sm font-semibold text-gray-800">{user.name}</span>
               <span className="text-xs font-medium text-gray-500">{user.role.replace('_', ' ')}</span>
             </div>
-            <div className="h-10 w-10 rounded-full overflow-hidden border-2 border-gray-100 shadow-sm">
+            <div className="h-10 w-10 rounded-full overflow-hidden border-2 border-gray-100 shadow-sm hover:border-primary transition-colors">
               <img src="/images/avatar.png" alt="Profile" className="h-full w-full object-cover" />
             </div>
           </div>
         </header>
-        <main className="flex-1 overflow-auto p-8">
+        <main className="flex-1 overflow-auto p-8 relative">
           <Outlet />
+          <ProfileModal isOpen={isProfileModalOpen} onClose={() => setIsProfileModalOpen(false)} />
         </main>
       </div>
     </div>
