@@ -56,12 +56,12 @@ const login = async (req, res, next) => {
 
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
-      return res.status(401).json({ success: false, message: 'Invalid credentials.' });
+      return res.status(401).json({ success: false, message: 'User does not exist.' });
     }
 
     const isMatch = await bcrypt.compare(password, user.passwordHash);
     if (!isMatch) {
-      return res.status(401).json({ success: false, message: 'Invalid credentials.' });
+      return res.status(401).json({ success: false, message: 'Incorrect password.' });
     }
 
     const token = generateToken(user.id, user.role);
