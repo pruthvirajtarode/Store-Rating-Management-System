@@ -25,6 +25,7 @@ const getOwnerDashboard = async (req, res, next) => {
         id: store.id,
         name: store.name,
         address: store.address,
+        imageUrl: store.imageUrl,
         averageRating: avg,
         totalRatings: store.ratings.length,
         ratings: store.ratings.map(r => ({

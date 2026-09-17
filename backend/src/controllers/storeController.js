@@ -45,6 +45,7 @@ const getStores = async (req, res, next) => {
         id: store.id,
         name: store.name,
         address: store.address,
+        imageUrl: store.imageUrl,
         averageRating: avg, 
         userRating: userRating ? userRating.rating : null
       };
@@ -86,6 +87,7 @@ const getStoreById = async (req, res, next) => {
         id: store.id,
         name: store.name,
         address: store.address,
+        imageUrl: store.imageUrl,
         averageRating: avg
       } 
     });
