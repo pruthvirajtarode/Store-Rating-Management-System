@@ -46,12 +46,22 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex bg-gray-50 font-sans relative overflow-hidden">
-      {/* Subtle floating blobs for dynamic background */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 animate-[pulse_8s_ease-in-out_infinite] pointer-events-none"></div>
-      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-indigo-100/40 rounded-full blur-3xl translate-y-1/3 animate-[pulse_10s_ease-in-out_infinite_alternate] pointer-events-none"></div>
+    <div className="min-h-screen flex font-sans relative overflow-hidden bg-gray-900 lg:bg-gray-50">
+      {/* Background image for mobile */}
+      <div className="absolute inset-0 z-0 lg:hidden">
+        <img
+          src="/signup-bg.png"
+          alt="Professional Office"
+          className="w-full h-full object-cover opacity-40"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-900/60 to-gray-900/95"></div>
+      </div>
 
-      {/* Left side - Image */}
+      {/* Subtle floating blobs for dynamic background (only visible on desktop to save mobile performance) */}
+      <div className="hidden lg:block absolute top-0 right-0 w-[500px] h-[500px] bg-blue-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 animate-[pulse_8s_ease-in-out_infinite] pointer-events-none"></div>
+      <div className="hidden lg:block absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-indigo-100/40 rounded-full blur-3xl translate-y-1/3 animate-[pulse_10s_ease-in-out_infinite_alternate] pointer-events-none"></div>
+
+      {/* Left side - Image (Desktop Only) */}
       <div className="hidden lg:flex lg:w-1/2 relative bg-gray-900 overflow-hidden z-10 shadow-2xl">
         <img
           src="/signup-bg.png"
@@ -69,8 +79,14 @@ const Login = () => {
       </div>
 
       {/* Right side - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 relative z-10">
-        <div className="w-full max-w-md bg-white/80 backdrop-blur-xl p-8 sm:p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white animate-in zoom-in-95 duration-500">
+      <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-6 sm:p-12 relative z-10 min-h-screen">
+        {/* Mobile Header Text */}
+        <div className="lg:hidden text-center text-white mb-8 mt-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <h2 className="text-3xl font-bold tracking-tight">RateHub</h2>
+          <p className="text-gray-300 mt-2 text-sm">Professional store rating management</p>
+        </div>
+
+        <div className="w-full max-w-md bg-white/95 lg:bg-white/80 backdrop-blur-xl p-8 sm:p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/50 animate-in zoom-in-95 duration-500">
           <div className="text-center lg:text-left mb-8">
             <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Sign In</h1>
             <p className="text-gray-500 mt-2">Welcome back! Please enter your details.</p>

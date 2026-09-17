@@ -91,10 +91,20 @@ const Signup = () => {
   const passwordsMatch = formData.password.length > 0 && formData.password === formData.confirmPassword;
 
   return (
-    <div className="min-h-screen flex bg-gray-50 font-sans relative overflow-hidden">
-      {/* Subtle floating blobs for dynamic background */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 animate-[pulse_8s_ease-in-out_infinite] pointer-events-none"></div>
-      <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-indigo-100/40 rounded-full blur-3xl translate-y-1/3 animate-[pulse_10s_ease-in-out_infinite_alternate] pointer-events-none"></div>
+    <div className="min-h-screen flex font-sans relative overflow-hidden bg-gray-900 lg:bg-gray-50">
+      {/* Background image for mobile */}
+      <div className="absolute inset-0 z-0 lg:hidden">
+        <img
+          src="/signup-bg.png"
+          alt="Professional Office"
+          className="w-full h-full object-cover opacity-40"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-900/60 to-gray-900/95"></div>
+      </div>
+
+      {/* Subtle floating blobs for dynamic background (desktop only) */}
+      <div className="hidden lg:block absolute top-0 right-0 w-[500px] h-[500px] bg-blue-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 animate-[pulse_8s_ease-in-out_infinite] pointer-events-none"></div>
+      <div className="hidden lg:block absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-indigo-100/40 rounded-full blur-3xl translate-y-1/3 animate-[pulse_10s_ease-in-out_infinite_alternate] pointer-events-none"></div>
 
       {/* Left side - Image */}
       <div className="hidden lg:flex lg:w-1/2 relative bg-gray-900 overflow-hidden z-10 shadow-2xl">
@@ -114,8 +124,14 @@ const Signup = () => {
       </div>
 
       {/* Right side - Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 sm:p-12 relative z-10 overflow-y-auto">
-        <div className="w-full max-w-md bg-white/80 backdrop-blur-xl p-8 sm:p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white animate-in zoom-in-95 duration-500 my-8">
+      <div className="w-full lg:w-1/2 flex flex-col items-center justify-center p-6 sm:p-12 relative z-10 overflow-y-auto min-h-screen py-12">
+        {/* Mobile Header Text */}
+        <div className="lg:hidden text-center text-white mb-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
+          <h2 className="text-3xl font-bold tracking-tight">Join RateHub</h2>
+          <p className="text-gray-300 mt-2 text-sm">Professional store rating management</p>
+        </div>
+
+        <div className="w-full max-w-md bg-white/95 lg:bg-white/80 backdrop-blur-xl p-8 sm:p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-white/50 animate-in zoom-in-95 duration-500">
           {success ? (
             <div className="text-center bg-green-50 p-10 rounded-2xl border border-green-100 animate-in fade-in duration-500">
               <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6">
