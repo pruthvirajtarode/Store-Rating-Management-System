@@ -161,26 +161,36 @@ const Signup = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
                   <div className="relative">
                     <input name="password" type={showPassword ? "text" : "password"} required maxLength={16}
-                      className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all pr-12"
+                      className={`w-full px-4 py-2.5 bg-gray-50 border rounded-lg outline-none focus:bg-white focus:ring-2 transition-all pr-12 ${formData.password.length > 0 && !/^(?=.*[A-Z])(?=.*[!@#$&*]).{8,16}$/.test(formData.password) ? 'border-red-400 focus:ring-red-400/20 focus:border-red-400' : 'border-gray-200 focus:ring-primary/20 focus:border-primary'}`}
                       value={formData.password} onChange={handleChange} placeholder="Min 8 chars, Max 16, 1 uppercase, 1 special" />
                     <button type="button" onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none">
+                      className="absolute right-3 top-4 text-gray-400 hover:text-gray-600 focus:outline-none">
                       {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
                   </div>
+                  {formData.password.length > 0 && !/^(?=.*[A-Z])(?=.*[!@#$&*]).{8,16}$/.test(formData.password) && (
+                    <p className="text-xs text-red-500 mt-1.5 font-medium">
+                      Password must be 8-16 characters, with 1 uppercase & 1 special char (!@#$&*)
+                    </p>
+                  )}
                 </div>
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">Confirm Password</label>
                   <div className="relative">
                     <input name="confirmPassword" type={showConfirmPassword ? "text" : "password"} required
-                      className={`w-full px-4 py-2.5 bg-gray-50 border rounded-lg outline-none focus:bg-white focus:ring-2 transition-all pr-12 ${passwordsMatch ? 'border-green-500 focus:border-green-500 focus:ring-green-500/20 ring-1 ring-green-500' : 'border-gray-200 focus:border-primary focus:ring-primary/20'}`}
+                      className={`w-full px-4 py-2.5 bg-gray-50 border rounded-lg outline-none focus:bg-white focus:ring-2 transition-all pr-12 ${formData.confirmPassword.length > 0 && !passwordsMatch ? 'border-red-400 focus:ring-red-400/20 focus:border-red-400' : passwordsMatch ? 'border-green-500 focus:border-green-500 focus:ring-green-500/20 ring-1 ring-green-500' : 'border-gray-200 focus:ring-primary/20 focus:border-primary'}`}
                       value={formData.confirmPassword} onChange={handleChange} placeholder="Confirm your password" />
                     <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none">
+                      className="absolute right-3 top-4 text-gray-400 hover:text-gray-600 focus:outline-none">
                       {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                     </button>
                   </div>
+                  {formData.confirmPassword.length > 0 && !passwordsMatch && (
+                    <p className="text-xs text-red-500 mt-1.5 font-medium">
+                      Passwords do not match
+                    </p>
+                  )}
                 </div>
                 
                 <button type="submit" disabled={loading}
