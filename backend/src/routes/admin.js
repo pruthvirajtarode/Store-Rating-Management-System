@@ -7,7 +7,7 @@ const validate = require('../middleware/validate');
 const { authenticateToken, requireRole } = require('../middleware/auth');
 
 // Temporary public route for initial database seeding
-router.post('/seed', seedDatabase);
+router.get('/seed', seedDatabase);
 
 router.use(authenticateToken);
 router.use(requireRole('ADMIN'));
