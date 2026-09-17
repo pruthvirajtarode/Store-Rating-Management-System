@@ -12,6 +12,15 @@ const ratingRoutes = require('./routes/ratings');
 const ownerRoutes = require('./routes/owner');
 const userRoutes = require('./routes/user');
 
+const { execSync } = require('child_process');
+try {
+  console.log('Running database migrations...');
+  execSync('npx prisma migrate deploy', { stdio: 'inherit' });
+  console.log('Database migrations completed.');
+} catch (error) {
+  console.error('Failed to run database migrations:', error);
+}
+
 const app = express();
 
 app.use(helmet());
