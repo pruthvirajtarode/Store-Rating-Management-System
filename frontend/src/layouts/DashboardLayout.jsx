@@ -40,8 +40,9 @@ const DashboardLayout = () => {
     <div className="flex flex-col md:flex-row h-screen bg-gray-50">
       {/* Sidebar */}
       <aside className="w-full md:w-64 bg-white border-r md:border-r flex flex-row md:flex-col justify-between md:justify-start shrink-0 overflow-x-auto">
-        <div className="h-16 flex items-center px-6 border-b md:border-b font-bold text-xl text-primary shrink-0">
-          RateHub
+        <div className="h-16 flex items-center px-6 border-b md:border-b shrink-0 gap-2">
+          <img src="/images/logo.png" alt="RateHub Logo" className="h-8 w-8 object-contain" />
+          <span className="font-bold text-xl text-primary tracking-tight">RateHub</span>
         </div>
         <nav className="flex flex-row md:flex-col md:flex-1 p-2 md:p-4 space-x-2 md:space-x-0 md:space-y-1 overflow-x-auto no-scrollbar">
           {links.map((link) => (
@@ -76,10 +77,14 @@ const DashboardLayout = () => {
           <h1 className="font-semibold text-lg text-gray-800 capitalize">
             {location.pathname.split('/').pop().replace('-', ' ')}
           </h1>
-          <div className="flex items-center gap-4">
-            <span className="text-sm font-medium text-gray-600">
-              {user.name} <span className="ml-2 px-2 py-1 bg-gray-100 rounded-full text-xs">{user.role}</span>
-            </span>
+          <div className="flex items-center gap-3">
+            <div className="flex flex-col items-end hidden sm:flex">
+              <span className="text-sm font-semibold text-gray-800">{user.name}</span>
+              <span className="text-xs font-medium text-gray-500">{user.role.replace('_', ' ')}</span>
+            </div>
+            <div className="h-10 w-10 rounded-full overflow-hidden border-2 border-gray-100 shadow-sm">
+              <img src="/images/avatar.png" alt="Profile" className="h-full w-full object-cover" />
+            </div>
           </div>
         </header>
         <main className="flex-1 overflow-auto p-8">
