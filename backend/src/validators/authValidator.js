@@ -7,7 +7,7 @@ const passwordRegex = /^(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,16}$/;
 
 const signupValidation = [
   body('name')
-    .isLength({ min: 2, max: 60 }).withMessage('Name must be between 2 and 60 characters.')
+    .isLength({ min: 20, max: 60 }).withMessage('Name must be between 20 and 60 characters.')
     .matches(/^[A-Za-z\s]+$/).withMessage('Name must contain only letters and spaces.'),
   body('email')
     .isEmail().withMessage('Please enter a valid email address.')

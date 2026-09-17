@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
 import { toast } from '../../components/Toast';
+import { Plus, ArrowUp, ArrowDown } from 'lucide-react';
+import AddStoreModal from '../../components/AddStoreModal';
 
 const AdminStores = () => {
   const [stores, setStores] = useState([]);
@@ -8,11 +10,16 @@ const AdminStores = () => {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+  // Sorting state
+  const [sortBy, setSortBy] = useState('name');
+  const [sortOrder, setSortOrder] = useState('asc');
 
   const fetchStores = async () => {
     setLoading(true);
     try {
-      const response = await api.get(`/admin/stores?page=${page}&limit=10&search=${search}`);
+      const response = await api.get(`/admin/stores?page=${page}&limit=10&search=${search}&sortBy=${sortBy}&sortOrder=${sortOrder}`);
       setStores(response.data.data.stores);
       setTotalPages(response.data.data.pagination.totalPages);
     } catch (error) {
@@ -24,7 +31,7 @@ const AdminStores = () => {
 
   useEffect(() => {
     fetchStores();
-  }, [page]);
+  }, [page, sortBy, sortOrder]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -32,8 +39,34 @@ const AdminStores = () => {
     fetchStores();
   };
 
+  const handleSort = (field) => {
+    if (sortBy === field) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortBy(field);
+      setSortOrder('asc');
+    }
+    setPage(1);
+  };
+
+  const SortIcon = ({ field }) => {
+    if (sortBy !== field) return null;
+    return sortOrder === 'asc' ? <ArrowUp size={14} className="inline ml-1" /> : <ArrowDown size={14} className="inline ml-1" />;
+  };
+
   return (
     <div className="bg-white p-6 rounded-lg border shadow-sm">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl font-bold text-gray-900">Manage Stores</h2>
+        <button 
+          onClick={() => setIsAddModalOpen(true)}
+          className="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors"
+        >
+          <Plus size={18} />
+          Add Store
+        </button>
+      </div>
+
       <div className="flex flex-col md:flex-row gap-4 justify-between items-center mb-6">
         <form onSubmit={handleSearch} className="flex gap-2 w-full md:w-auto">
           <input 
@@ -59,11 +92,19 @@ const AdminStores = () => {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-gray-50 border-b">
-                  <th className="p-3 font-medium text-gray-600">Store Name</th>
-                  <th className="p-3 font-medium text-gray-600">Email</th>
-                  <th className="p-3 font-medium text-gray-600">Address</th>
+                  <th className="p-3 font-medium text-gray-600 cursor-pointer hover:bg-gray-100" onClick={() => handleSort('name')}>
+                    Store Name <SortIcon field="name" />
+                  </th>
+                  <th className="p-3 font-medium text-gray-600 cursor-pointer hover:bg-gray-100" onClick={() => handleSort('email')}>
+                    Email <SortIcon field="email" />
+                  </th>
+                  <th className="p-3 font-medium text-gray-600 cursor-pointer hover:bg-gray-100" onClick={() => handleSort('address')}>
+                    Address <SortIcon field="address" />
+                  </th>
                   <th className="p-3 font-medium text-gray-600">Owner</th>
-                  <th className="p-3 font-medium text-gray-600">Rating</th>
+                  <th className="p-3 font-medium text-gray-600 cursor-pointer hover:bg-gray-100" onClick={() => handleSort('rating')}>
+                    Rating <SortIcon field="rating" />
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -105,6 +146,12 @@ const AdminStores = () => {
           </button>
         </div>
       )}
+      
+      <AddStoreModal 
+        isOpen={isAddModalOpen} 
+        onClose={() => setIsAddModalOpen(false)} 
+        onStoreAdded={() => { setPage(1); fetchStores(); }} 
+      />
     </div>
   );
 };

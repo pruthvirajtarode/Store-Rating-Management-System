@@ -69,9 +69,9 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1.5">New Password</label>
             <div className="relative">
-              <input name="newPassword" type={showNew ? "text" : "password"} required
+              <input name="newPassword" type={showNew ? "text" : "password"} required maxLength={16}
                 className={`w-full px-4 py-2 bg-gray-50 border rounded-lg outline-none focus:bg-white focus:ring-2 transition-all pr-12 ${formData.newPassword.length > 0 ? (isPasswordStrong ? 'border-green-500 focus:border-green-500 focus:ring-green-500/20' : 'border-amber-500 focus:border-amber-500 focus:ring-amber-500/20') : 'border-gray-200 focus:border-primary focus:ring-primary/20'}`}
-                value={formData.newPassword} onChange={handleChange} placeholder="Min 8 chars, 1 uppercase, 1 special" />
+                value={formData.newPassword} onChange={handleChange} placeholder="Min 8 chars, Max 16, 1 uppercase, 1 special" />
               <button type="button" onClick={() => setShowNew(!showNew)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none">
                 {showNew ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -79,7 +79,7 @@ const ChangePasswordModal = ({ isOpen, onClose }) => {
             </div>
             {formData.newPassword.length > 0 && (
               <p className={`text-xs mt-1.5 font-medium ${isPasswordStrong ? 'text-green-600' : 'text-amber-600'}`}>
-                {isPasswordStrong ? '✓ Strong password' : 'Weak: Needs 8+ chars, 1 uppercase, 1 special (!@#$&*)'}
+                {isPasswordStrong ? '✓ Strong password' : 'Weak: Needs 8-16 chars, 1 uppercase, 1 special (!@#$&*)'}
               </p>
             )}
           </div>

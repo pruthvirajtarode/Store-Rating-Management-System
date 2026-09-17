@@ -32,6 +32,11 @@ const Signup = () => {
       return false;
     }
 
+    if (name.length < 20 || name.length > 60) {
+      toast.error('Full name must be between 20 and 60 characters.');
+      return false;
+    }
+
     const nameRegex = /^[A-Za-z\s]+$/;
     if (!nameRegex.test(name)) {
       toast.error('Full name must contain only letters and spaces.');
@@ -43,10 +48,10 @@ const Signup = () => {
       return false;
     }
 
-    // Min 8 chars, 1 uppercase, 1 special
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$&*]).{8,}$/;
+    // Min 8 chars, Max 16 chars, 1 uppercase, 1 special
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$&*]).{8,16}$/;
     if (!passwordRegex.test(password)) {
-      toast.error('Password must be at least 8 characters long, contain 1 uppercase letter and 1 special character.');
+      toast.error('Password must be 8-16 characters long, contain 1 uppercase letter and 1 special character.');
       return false;
     }
 
@@ -123,9 +128,9 @@ const Signup = () => {
               <form onSubmit={handleSignup} className="space-y-5">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">Full Name</label>
-                  <input name="name" type="text" required maxLength={60}
+                  <input name="name" type="text" required minLength={20} maxLength={60}
                     className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-                    value={formData.name} onChange={handleChange} placeholder="John Doe" />
+                    value={formData.name} onChange={handleChange} placeholder="John Doe (20 chars min)" />
                 </div>
                 
                 <div>
@@ -145,9 +150,9 @@ const Signup = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
                   <div className="relative">
-                    <input name="password" type={showPassword ? "text" : "password"} required
+                    <input name="password" type={showPassword ? "text" : "password"} required maxLength={16}
                       className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg outline-none focus:bg-white focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all pr-12"
-                      value={formData.password} onChange={handleChange} placeholder="Min 8 chars, 1 uppercase, 1 special" />
+                      value={formData.password} onChange={handleChange} placeholder="Min 8 chars, Max 16, 1 uppercase, 1 special" />
                     <button type="button" onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none">
                       {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
