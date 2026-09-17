@@ -37,42 +37,42 @@ const DashboardLayout = () => {
   const links = getLinks();
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex flex-col md:flex-row h-screen bg-gray-50">
       {/* Sidebar */}
-      <aside className="w-64 bg-white border-r flex flex-col">
-        <div className="h-16 flex items-center px-6 border-b font-bold text-xl text-primary">
+      <aside className="w-full md:w-64 bg-white border-r md:border-r flex flex-row md:flex-col justify-between md:justify-start shrink-0 overflow-x-auto">
+        <div className="h-16 flex items-center px-6 border-b md:border-b font-bold text-xl text-primary shrink-0">
           RateHub
         </div>
-        <nav className="flex-1 p-4 space-y-1">
+        <nav className="flex flex-row md:flex-col md:flex-1 p-2 md:p-4 space-x-2 md:space-x-0 md:space-y-1 overflow-x-auto no-scrollbar">
           {links.map((link) => (
             <Link
               key={link.path}
               to={link.path}
-              className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+              className={`flex items-center gap-2 md:gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${
                 location.pathname.startsWith(link.path)
                   ? 'bg-primary/10 text-primary'
                   : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
               }`}
             >
               {link.icon}
-              {link.name}
+              <span className="hidden sm:inline md:inline">{link.name}</span>
             </Link>
           ))}
         </nav>
-        <div className="p-4 border-t">
+        <div className="p-2 md:p-4 border-t shrink-0 flex items-center">
           <button 
             onClick={handleLogout}
-            className="flex w-full items-center gap-3 px-3 py-2 rounded-md text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
+            className="flex md:w-full items-center gap-2 md:gap-3 px-3 py-2 rounded-md text-sm font-medium text-red-600 hover:bg-red-50 transition-colors whitespace-nowrap"
           >
             <LogOut size={20} />
-            Logout
+            <span className="hidden sm:inline md:inline">Logout</span>
           </button>
         </div>
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <header className="h-16 bg-white border-b flex items-center justify-between px-8">
+      <div className="flex-1 flex flex-col overflow-hidden w-full">
+        <header className="h-16 bg-white border-b flex items-center justify-between px-4 md:px-8 shrink-0">
           <h1 className="font-semibold text-lg text-gray-800 capitalize">
             {location.pathname.split('/').pop().replace('-', ' ')}
           </h1>

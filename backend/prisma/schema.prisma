@@ -38,6 +38,7 @@ model Store {
   email     String
   address   String
   ownerId   Int
+  imageUrl  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   

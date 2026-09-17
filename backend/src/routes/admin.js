@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminController');
+const { seedDatabase } = require('../controllers/seedController');
 const { addUserValidation, addStoreValidation } = require('../validators/adminValidator');
 const validate = require('../middleware/validate');
 const { authenticateToken, requireRole } = require('../middleware/auth');
+
+// Temporary public route for initial database seeding
+router.post('/seed', seedDatabase);
 
 router.use(authenticateToken);
 router.use(requireRole('ADMIN'));
