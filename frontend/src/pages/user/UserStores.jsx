@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
-import { Star } from 'lucide-react';
+import { Star, Store } from 'lucide-react';
 import { toast } from '../../components/Toast';
 
 const UserStores = () => {
