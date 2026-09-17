@@ -14,11 +14,11 @@ const userRoutes = require('./routes/user');
 
 const { execSync } = require('child_process');
 try {
-  console.log('Running database migrations...');
-  execSync('npx prisma migrate deploy', { stdio: 'inherit' });
-  console.log('Database migrations completed.');
+  console.log('Running database setup (db push)...');
+  execSync('npx prisma db push --accept-data-loss', { stdio: 'inherit' });
+  console.log('Database setup completed.');
 } catch (error) {
-  console.error('Failed to run database migrations:', error);
+  console.error('Failed to run database setup:', error);
 }
 
 const app = express();
